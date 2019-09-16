@@ -66,47 +66,16 @@ for i = 1:length(fields_list)
 end
 end
 
-function metadata = construct_metadata_struct(field_handles)
-metadata = struct;
-keys = field_handles.keys;
-for i = 1:length(keys)
-    key = keys{i};
-    handle = field_handles(key);
-    value = handle.Value;
-    if any(strcmp(key, {'keywords','experimenter'})) && ...
-            contains(value, ';')
-        value = strsplit(value, ';');
-    elseif strcmp(key, {'sesssion_start_time', 'date_of_birth'})
-        value = datenum(value);
-    elseif isfinite(str2double(value))
-        value = str2double(value);
-    end
-    metadata.(key) = value;
-end
-
-end
 
 function locate_processed_ophys(btn, edit_handle)
 [file, path] = uigetfile('*.mat');
 edit_handle.Value = [path, file];
 end
 
-
 function save_metadata(btn, field_handles)
 fpath = uiputfile('*.yml');
 metadata = construct_metadata_struct(field_handles);
 WriteYaml(fpath, metadata)
-end
-
-function save_nwb(btn, data_path, field_handles)
-
-fpath = uiputfile('*.nwb');
-metadata = construct_metadata_struct(field_handles);
-[image_masks, roi_response_data] = extract_nwb_data(data_path);
-nwb = init_nwb_session(metadata);
-nwb = add_processed_ophys(nwb, metadata, image_masks, roi_response_data);
-nwbExport(nwb, fpath);
-
 end
 
 function field_handles = make_group(f, fields, panel_pos, title, field_handles)
@@ -135,10 +104,33 @@ end
 
 end
 
-function [image_masks, roi_response_data] = extract_nwb_data(fpath)
+function metadata = construct_metadata_struct(field_handles)
+metadata = struct;
+keys = field_handles.keys;
+for i = 1:length(keys)
+    key = keys{i};
+    handle = field_handles(key);
+    value = handle.Value;
+    if any(strcmp(key, {'keywords','experimenter'})) && ...
+            contains(value, ';')
+        value = strsplit(value, ';');
+    elseif strcmp(key, {'sesssion_start_time', 'date_of_birth'})
+        value = datenum(value);
+    elseif isfinite(str2double(value))
+        value = str2double(value);
+    end
+    metadata.(key) = value;
+end
 
-dat = load(fpath);
-image_masks = dat.extractAnalysisOutput.filters;
-roi_response_data = dat.extractAnalysisOutput.traces;
+end
+
+function save_nwb(btn, data_path, field_handles)
+
+fpath = uiputfile('*.nwb');
+metadata = construct_metadata_struct(field_handles);
+[image_masks, roi_response_data] = extract_nwb_data(data_path);
+nwb = init_nwb_session(metadata);
+nwb = add_processed_ophys(nwb, metadata, image_masks, roi_response_data);
+nwbExport(nwb, fpath);
 
 end
