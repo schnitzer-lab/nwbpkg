@@ -12,12 +12,12 @@ for i = 1:length(fields)
         meta_match = fields{i};
         key = fields{i};
     end
-    if isfield(metadata_struct, fields{i})
-        value = metadata_struct.(fields{i});
+    if isfield(metadata_struct, meta_match)
+        value = metadata_struct.(meta_match);
         if isa(value, 'DateTime')
             value = datetime(datestr(value));
         end
-        if any(key) && any(value)
+        if ~isempty(key) && ~isempty(value)
             input_args{end+1} = key;
             input_args{end+1} = value;
         end

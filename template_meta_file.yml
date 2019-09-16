@@ -1,11 +1,11 @@
 ## NWBFile:
+identifier: ABC123
 session_id: 'this_id'
 session_start_time: 2019-09-11 16:06:00
 session_description: session_description
 ##data_collection: ''
 #experimenter:
 # - ''
-#identifier: ABC123
 #institution: ''
 keywords:
 - ophys
