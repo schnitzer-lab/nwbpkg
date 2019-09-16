@@ -1,0 +1,94 @@
+# This file defines the mapping between the metadata yaml file and the 
+# corresponding input args in matnwb.
+
+## GENERAL
+NWBFile:
+    - identifier
+    - session_start_time
+    - session_description
+    - - session_id
+      - general_session_id
+    - - data_collection
+      - general_data_collection
+    - - experimenter
+      - general_experimenter
+    - - institution
+      - general_institution
+    - - lab
+      - general_lab
+    - - keywords
+      - general_keywords
+    - - notes
+      - general_notes
+    - - pharmacology
+      - general_pharmacology
+    - - protocol
+      - general_protocol
+    - - related_pubications
+      - general_related_publications
+    - - slices
+      - general_slices
+    - - stimulus_notes
+      - general_stimulus_notes
+    - - source_script
+      - general_source_script
+    - - source_script_file_name
+      - general_source_script_file_name
+    - - surgery
+      - general_surgery
+    - - virus
+      - general_virus
+    - - experiment_description
+      - general_experiment_description
+
+Subject:
+    - sex
+    - species
+    - genotype
+    - subject_id
+    - - subject_description
+      - description
+    - age
+    - date_of_birth
+
+Device:
+    - device_name
+
+## OPHYS
+ImagingPlane:
+    - - imaging_plane_name
+      - 
+    - - imaging_plane_description
+      - description
+    - excitation_lambda
+    - imaging_rate
+    - indicator
+    - - imaging_plane_location
+      - location
+    - reference_frame
+
+PlaneSegmentation:
+    - - plane_segmentation_description
+      - description
+
+OpticalChannel:
+    - emission_lambda
+    - - optical_channel_description
+      - description
+    
+RoiResponseSeries:
+    - - df_over_f_data_conversion
+      - data_conversion
+    - - df_over_f_data_resolution
+      - data_resolution
+    - - df_over_f_starting_time
+      - starting_time
+    - - imaging_rate
+      - starting_time_rate
+    
+
+
+
+
+
+

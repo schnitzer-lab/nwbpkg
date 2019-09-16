@@ -1,0 +1,38 @@
+age: []
+data_collection: []
+date_of_birth: []
+device_name: device
+emission_lambda: 500.0
+excitation_lambda: 300.0
+experiment_description: []
+experimenter: []
+genotype: asdfasd
+identifier: []
+imaging_plane_description: []
+imaging_plane_location: unknown
+imaging_plane_name: ImagingPlane
+imaging_rate: 30.0
+indicator: []
+institution: []
+keywords: [ophys, CELLMax]
+lab: []
+notes: []
+optical_channel_description: no description
+pharmacology: []
+plane_segmentation_description: no description
+protocol: []
+reference_frame: []
+related_pubications: []
+session_description: session_description
+session_id: this_id
+session_start_time: 11-Sep-2019 16:06:00
+sex: M
+slices: []
+source_script: []
+source_script_file_name: []
+species: []
+stimulus_notes: []
+subject_description: []
+subject_id: []
+surgery: []
+virus: []
