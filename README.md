@@ -2,7 +2,7 @@
 Repository for NWB standards and converting imaging data to NWB format. This package parses a YAML text file that specifies meta-data and combines that with an output of the CalciumImagingAnalysis pipeline to create an NWB file.
 
 ## Requirements
-* YAMLMatlab
+* [YAMLMatlab](https://code.google.com/archive/p/yamlmatlab/)
 
 ## Usage
 

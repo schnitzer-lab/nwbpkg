@@ -1,4 +1,4 @@
-%% converst from extractAnalysis to NWB
+%% convert from extractAnalysis to NWB
 
 metadata_path = 'template_meta_file.yml'; 
 data_path = '/Users/bendichter/dev/calciumImagingAnalysis/data/2014_04_01_p203_m19_check01_raw/2014_04_01_p203_m19_check01_extractAnalysis.mat';
