@@ -1,4 +1,4 @@
-f_size = [360,500,700,700];
+f_size = [200,200,700,700];
 
 f = uifigure('Visible','off','Position', f_size);
 
