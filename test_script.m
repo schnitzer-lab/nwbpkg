@@ -35,7 +35,7 @@ data_path='D:\Downloads\2014_04_01_p203_m19_check01_cnmfeAnalysis.mat';
 
 % fpath = uiputfile('*.nwb');
 fpath = 'test.nwb';
-metadata2 = construct_metadata_struct(field_handles);
+metadata = construct_metadata_struct(field_handles);
 [image_masks, roi_response_data] = extract_nwb_data_cnmfe(data_path);
 nwb = init_nwb_session(metadata);
 nwb = add_processed_ophys(nwb, metadata, image_masks, roi_response_data);
@@ -44,7 +44,7 @@ nwbExport(nwb, fpath);
 function metadata = construct_metadata_struct(field_handles)
 metadata = struct;
 keys = field_handles.keys;
-for i = 17 %1:length(keys)
+for i = 1:length(keys)
     key = keys{i};
     handle = field_handles(key);
     value = handle;

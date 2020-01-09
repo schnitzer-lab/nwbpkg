@@ -10,8 +10,8 @@ session_description: session_description
 keywords:
 - ophys
 - CELLMax
-#lab: ''
-#notes: ''
+lab: test
+notes: test
 #pharmacology: ''
 #protocol: ''
 #related_pubications: ''
