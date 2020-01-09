@@ -1,4 +1,7 @@
-%% get metadata
+%% write an nwb file
+
+clear all 
+
 % fpath = uigetfile('*.yml');
 fpath = 'template_meta_file.yml';
 metadata = ReadYaml(fpath);
@@ -28,14 +31,14 @@ for i=1:length(fields)
     end
 end
 
-
-%% testscript
 data_path='D:\Downloads\2014_04_01_p203_m19_check01_cnmfeAnalysis.mat';
-fpath = uiputfile('*.nwb');
+
+% fpath = uiputfile('*.nwb');
+fpath = 'test.nwb';
 metadata2 = construct_metadata_struct(field_handles);
 [image_masks, roi_response_data] = extract_nwb_data_cnmfe(data_path);
 nwb = init_nwb_session(metadata);
-nwb = add_processed_ophys(nwb, metadata, image_masks, roi_response_data.first);
+nwb = add_processed_ophys(nwb, metadata, image_masks, roi_response_data);
 nwbExport(nwb, fpath);
 
 function metadata = construct_metadata_struct(field_handles)
