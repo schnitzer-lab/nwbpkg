@@ -57,8 +57,6 @@ roi_response_series_varargin = get_input_args(metadata, 'RoiResponseSeries');
 ROIfields=fields(roi_response_data);
 numOfROIs=length(ROIfields);
 
-fluorescence = types.core.Fluorescence();
-
 for i=1:numOfROIs
     
     if frame_times
@@ -76,8 +74,11 @@ for i=1:numOfROIs
             'starting_time_rate', metadata.imaging_rate, ...
             roi_response_series_varargin{:});
     end
-fluorescence.roiresponseseries.set(['RoiResponseSeries' num2str(i)], roi_response_series);
 end
+
+fluorescence = types.core.Fluorescence();
+fluorescence.roiresponseseries.set('RoiResponseSeries1', roi_response_series_1);
+fluorescence.roiresponseseries.set('RoiResponseSeries2', roi_response_series_2);
 
 ophys_module.nwbdatainterface.set('Fluorescence', fluorescence);
 

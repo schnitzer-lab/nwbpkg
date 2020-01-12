@@ -1,10 +1,8 @@
+function mat2nwb_ivan(varargin)
+
 %% write an nwb file
 
-clear all 
-
-% fpath = uigetfile('*.yml');
-fpath = 'template_meta_file.yml';
-metadata = ReadYaml(fpath);
+metadata = ReadYaml(fpathYAML);
 fields_list = fields(metadata);
 
 field_map = ReadYaml('matnwb_map.yml');
@@ -57,6 +55,8 @@ for i = 1:length(keys)
         value = str2double(value);
     end
     metadata.(key) = value;
+end
+
 end
 
 end
