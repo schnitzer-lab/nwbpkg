@@ -1,0 +1,48 @@
+## NWBFile:
+identifier: ABC123
+session_id: 'this_id'
+session_start_time: 2019-09-11 16:06:00
+session_description: session_description
+##data_collection: ''
+experimenter: test_experimenter
+# - ''
+institution: test university
+keywords:
+- ophys
+- CELLMax
+- extra key words
+lab: 'abratory
+notes: notes notes notes
+pharmacology: what is pharmacology?
+protocol: abc12345678910
+related_pubications: citation a
+slices: yes
+stimulus_notes: notes
+source_script: source
+source_script_file_name: im not sure what that is
+surgery: yes
+virus: no
+
+## subject
+sex: M
+species: Mus musculus
+genotype: 12
+subject_id: ab14
+subject_description: mouse probably
+age: 12
+date_of_birth: 01/01/1001
+
+## ophys
+emission_lambda:  500. # nm
+excitation_lambda:  300. # nm
+indicator: 'my indicator'
+imaging_rate: 30. # Hz; appx.
+imaging_plane_location: unknown
+imaging_plane_name: ImagingPlane
+optical_channel_description: no description
+plane_segmentation_description: no description
+device_name: device
+manifod_conversion: 2
+manifold_unit: m
+manifold_reference_frame: upper left
+

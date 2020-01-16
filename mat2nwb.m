@@ -12,12 +12,12 @@ addParameter(p,'dataPath', defaultDataPath)
 parse(p,nwbPath,varargin{:})
 
 if strcmp(p.Results.ymlPath,'manual')
-    fpathYAML = uigetfile('*.yml');
+    fpathYML = uigetfile('*.yml');
 else
-    fpathYAML=p.Results.ymlPath;
+    fpathYML=p.Results.ymlPath;
 end
 
-metadata = ReadYaml(fpathYAML);
+metadata = ReadYaml(fpathYML);
 
 field_map = ReadYaml('matnwb_map.yml');
 field_handles = containers.Map;
@@ -71,7 +71,7 @@ else
 end
 
 metadata = construct_metadata_struct(field_handles);
-[image_masks, roi_response_data] = extract_nwb_data_cnmfe(data_path, data_type);
+[image_masks, roi_response_data] = extract_nwb_data(data_path, data_type);
 nwb = init_nwb_session(metadata);
 nwb = add_processed_ophys(nwb, metadata, image_masks, roi_response_data);
 nwbExport(nwb, fpath);
