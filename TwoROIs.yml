@@ -1,0 +1,102 @@
+# This file defines the mapping between the metadata yaml file and the 
+# corresponding input args in matnwb.
+
+## GENERAL
+NWBFile:
+  - identifier: aaa
+  - session_start_time: 12/12/2010
+  - session_description: ''
+  - - session_id: ''
+    - general_session_id
+  - - data_collection
+    - general_data_collection
+  - - experimenter
+    - general_experimenter
+  - - institution
+    - general_institution
+  - - lab
+    - general_lab
+  - - keywords
+    - general_keywords
+  - - notes
+    - general_notes
+  - - pharmacology
+    - general_pharmacology
+  - - protocol
+    - general_protocol
+  - - related_pubications
+    - general_related_publications
+  - - slices
+    - general_slices
+  - - stimulus_notes
+    - general_stimulus_notes
+  - - source_script
+    - general_source_script
+  - - source_script_file_name
+    - general_source_script_file_name
+  - - surgery
+    - general_surgery
+  - - virus
+    - general_virus
+  - - experiment_description
+    - general_experiment_description
+
+Subject:
+  - sex: m
+  - species: rat
+  - genotype: dhasj
+  - subject_id: 1235f
+  - age: '50 months'
+  - date_of_birth: 05/05/2050
+
+Device:
+  - device_name: name
+
+## OPHYS
+ImagingPlane:
+  - - imaging_plane_name: 'name'
+    - help
+  - description: 'fdjkshgfjksd'
+  - excitation_lambda: 2
+  - imaging_rate: 1
+  - indicator: ' '
+  - - imaging_plane_location: ' '
+    - location
+  - reference_frame: ' '
+
+PlaneSegmentation:
+  - - plane_segmentation_description: ' '
+    - description
+
+OpticalChannel:
+  - emission_lambda: 5
+  - - optical_channel_description: aaa
+    - description
+    
+RoiResponseSeries:
+  Series 1:
+    - - df_over_f_data_conversion: 
+      - data_conversion
+    - - df_over_f_data_resolution:
+      - data_resolution
+    - - df_over_f_starting_time: 40
+      - starting_time
+    - - imaging_rate: 500
+      - starting_time_rate
+      
+  Series 2:
+    - - df_over_f_data_conversion: 
+      - data_conversion
+    - - df_over_f_data_resolution:
+      - data_resolution
+    - - df_over_f_starting_time: 7
+      - starting_time
+    - - imaging_rate: 200
+      - starting_time_rate
+
+
+
+
+
+
+

@@ -19,29 +19,30 @@ end
 
 metadata = ReadYaml(fpathYML);
 
-field_map = ReadYaml('matnwb_map.yml');
+% field_map = ReadYaml('matnwb_map.yml');
+RawMeta = ReadYaml('matnwb_map.yml');
 field_handles = containers.Map;
 
 % populate field_handles
-
-allfields=[...
-    [field_map.NWBFile] [field_map.Subject]...
-    [field_map.ImagingPlane] [field_map.OpticalChannel]...
-    [field_map.PlaneSegmentation] [field_map.Device]...
-    ];
-
-for i=1:length(allfields)
-    if isa(allfields{i}, 'cell')
-        needed_fields=char(allfields{i}(1));
-    else
-        needed_fields=char(allfields(i));
-    end
-    if isfield(metadata,needed_fields)
-        field_handles(needed_fields)=metadata.(needed_fields);
-    else
-        field_handles(needed_fields)='';
-    end
-end
+% 
+% allfields=[...
+%     [field_map.NWBFile] [field_map.Subject]...
+%     [field_map.ImagingPlane] [field_map.OpticalChannel]...
+%     [field_map.PlaneSegmentation] [field_map.Device]...
+%     ];
+% 
+% for i=1:length(allfields)
+%     if isa(allfields{i}, 'cell')
+%         needed_fields=char(allfields{i}(1));
+%     else
+%         needed_fields=char(allfields(i));
+%     end
+%     if isfield(metadata,needed_fields)
+%         field_handles(needed_fields)=metadata.(needed_fields);
+%     else
+%         field_handles(needed_fields)='';
+%     end
+% end
 
 if strcmp(p.Results.dataPath,'manual')
     [file,path] = uigetfile('*.mat');
@@ -70,7 +71,7 @@ else
     data_type = p.Results.dataType;
 end
 
-metadata = construct_metadata_struct(field_handles);
+% metadata = construct_metadata_struct(RawMeta);
 [image_masks, roi_response_data] = extract_nwb_data(data_path, data_type);
 nwb = init_nwb_session(metadata);
 nwb = add_processed_ophys(nwb, metadata, image_masks, roi_response_data);
