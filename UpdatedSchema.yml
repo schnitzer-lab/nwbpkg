@@ -1,0 +1,40 @@
+---
+NWBFile:
+  keywords: []
+  session_start_time: '18-Jan-2020'
+  identifier: ident1
+  session_description: fdsfsfdsfd
+Ophys:
+  Devices:
+  - name: Device1
+  ImagingPlanes:
+  - name: ImagingPlane
+    description: ''
+    excitation_lambda: 200
+    imaging_rate: 5
+    optical_channels:
+    - emission_lambda: 200
+      description: desc1
+      name: OpticalChannel
+    indicator: ind1
+    device: device name
+    location: brain
+  ImageSegmentation:
+    name: ''
+    plane_segmentations:
+    - name: PlaneSeg1
+      description: hg
+  DFOverF:
+    name: DfOverF
+    roi_response_series:
+    - name: Series 1
+      description: First one
+      conversion: 1
+      tag: tag2
+    - name: Series2
+      description: second one
+      conversion: 1
+      tag: tag2
+Subject:
+  subject_id: '23'
+  species: mouse

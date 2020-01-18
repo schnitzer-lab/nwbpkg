@@ -1,42 +1,40 @@
 function input_args = get_input_args(metadata_struct, object_name)
 
 % aa = ReadYaml('matnwb_map.yml');
+if ~isempty(object_name)
+    workingStruct = metadata_struct.(object_name);
+else
+    workingStruct = metadata_struct;
+end
 
-fields = metadata_struct.(object_name);
+if isa(workingStruct,'cell')
+    fields=fieldnames(workingStruct{1});
+    workingStruct=workingStruct{1};
+else
+    fields=fieldnames(workingStruct);
+end
+
+if strcmp(object_name,'ImagingPlanes')
+    workingStruct=rmfield(workingStruct,'optical_channels');
+    fields(strcmp(fields,'optical_channels'))=[];
+end
 
 input_args = {};
 for i = 1:length(fields)
-    if isa(fields{i}, 'cell')
-        if isa(fields{i}{1},'struct')
-            if isempty(fields{i}{1}.(char(fieldnames(fields{i}{1}))))
-                fields{i}{1}.(char(fieldnames(fields{i}{1})))='empty';
-            end
-            input_args{end+1} = fields{i}{2};
-            
-            input_args{end+1} = fields{i}{1}.(char(fieldnames(fields{i}{1})));
-        else
-            input_args{end+1} = fields{i}{1};
-            input_args{end+1} = fields{i}{2};
-        end
+    if isa(workingStruct.(fields{i}), 'cell')
+        
+        input_args{end+1} = fields{i};
+        input_args{end+1} = workingStruct.(fields{i});
     else
+        
         try
-            if isempty(fields{i}.(char(fieldnames(fields{i}))))
-                fields{i}.(char(fieldnames(fields{i})))='empty';
+            if strcmp(fields(i),'session_start_time')
+                fields(i).(char(fieldnames(fields(i))))=datetime(fields(i).(char(fieldnames(fields(i)))));
             end
         end
-        try
-            if strcmp(fieldnames(fields{i}),'session_start_time');
-                fields{i}.(char(fieldnames(fields{i})))=datetime(fields{i}.(char(fieldnames(fields{i}))));
-            end
-        end
-        input_args{end+1} = char(fieldnames(fields{i}));
-        input_args{end+1} = fields{i}.(char(fieldnames(fields{i})));
+        input_args{end+1} = fields{i};
+        input_args{end+1} = workingStruct.(fields{i});
     end
 end
-% for i=1:length(input_args)
-%     if isa(input_args{i},'numeric')
-%         input_args{i}=num2str(input_args{i});
-%     end
-% end
 
 end

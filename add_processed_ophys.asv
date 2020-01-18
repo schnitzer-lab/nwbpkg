@@ -11,12 +11,14 @@ end
 
 n_rois = size(image_masks, 1);
 
-op_input_args = get_input_args(metadata, 'OpticalChannel');
+op_input_args = get_input_args(metadata.Ophys.ImagingPlanes{1}, 'optical_channels');
 optical_channel = types.core.OpticalChannel(op_input_args{:});
 
-nwb.general_devices.set(metadata.Device{1}.device_name, types.core.Device());
+try
+    nwb.general_devices.set(metadata.Device{1}.device_name, types.core.Device());
+end 
 
-ip_input_args = get_input_args(metadata, 'ImagingPlane');
+ip_input_args = get_input_args(metadata.Ophys, 'ImagingPlane');
 imaging_plane = types.core.ImagingPlane('device', ...
     types.untyped.SoftLink(['/general/devices/' metadata.Device{1}.device_name]), ...
     'optical_channel', optical_channel, ip_input_args{:});

@@ -11,24 +11,26 @@ end
 
 n_rois = size(image_masks, 1);
 
-op_input_args = get_input_args(metadata, 'OpticalChannel');
+op_input_args = get_input_args(metadata.Ophys.ImagingPlanes{1}, 'optical_channels');
 optical_channel = types.core.OpticalChannel(op_input_args{:});
 
-nwb.general_devices.set(metadata.Device{1}.device_name, types.core.Device());
+try
+    nwb.general_devices.set(metadata.Device{1}.device_name, types.core.Device());
+end 
 
-ip_input_args = get_input_args(metadata, 'ImagingPlane');
+ip_input_args = get_input_args(metadata.Ophys, 'ImagingPlanes');
 imaging_plane = types.core.ImagingPlane('device', ...
-    types.untyped.SoftLink(['/general/devices/' metadata.Device{1}.device_name]), ...
+    types.untyped.SoftLink(['/general/devices/' metadata.Ophys.Devices{1}.name]), ...
     'optical_channel', optical_channel, ip_input_args{:});
 
-nwb.general_optophysiology.set(metadata.ImagingPlane{1}{1}.imaging_plane_name, imaging_plane);
+nwb.general_optophysiology.set(metadata.Ophys.ImagingPlanes{1}.name, imaging_plane);
 
-imaging_plane_path = ['/general/optophysiology/' metadata.ImagingPlane{1}{1}.imaging_plane_name];
+imaging_plane_path = ['/general/optophysiology/' metadata.Ophys.ImagingPlanes{1}.name];
 
 ophys_module = types.core.ProcessingModule(...
     'description', 'holds processed calcium imaging data');
 
-ps_input_args = get_input_args(metadata, 'PlaneSegmentation');
+ps_input_args = get_input_args(metadata.Ophys.ImageSegmentation, 'plane_segmentations');
 plane_segmentation = types.core.PlaneSegmentation( ...
     'imaging_plane', imaging_plane, ...
     'colnames', {'imaging_mask'}, ...
@@ -52,11 +54,10 @@ roi_table_region = types.core.DynamicTableRegion( ...
     'description', 'all_rois', ...
     'data', [0 n_rois-1]');
 
-series_names=fieldnames(metadata.RoiResponseSeries);
-NumOfSeries=length(fieldnames(metadata.RoiResponseSeries));
+NumOfSeries=length(metadata.Ophys.DFOverF.roi_response_series);
 for ser=1:NumOfSeries
-    object_name=series_names{ser};
-    roi_response_series_varargin{ser} = get_input_args(metadata.RoiResponseSeries, object_name);
+%     series_names=metadata.Ophys.DFOverF.roi_response_series{ser}.name;
+    roi_response_series_varargin{ser} = get_input_args(metadata.Ophys.DFOverF.roi_response_series{ser}, '');
 end
 
 ROIfields=fields(roi_response_data);
@@ -78,7 +79,6 @@ for i=1:numOfROIs
             'rois', roi_table_region, ...
             'data', roi_response_data.(ROIfields{i}), ...
             'data_unit', 'lumens', ...
-            'starting_time_rate',  metadata.ImagingPlane{4}.imaging_rate, ...
             varIn{:});
     end
 fluorescence.roiresponseseries.set(['RoiResponseSeries' num2str(i)], roi_response_series);
