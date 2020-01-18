@@ -17,7 +17,9 @@ end
 if strcmp(object_name,'ImagingPlanes')
     workingStruct=rmfield(workingStruct,'optical_channels');
     fields(strcmp(fields,'optical_channels'))=[];
+    fields(strcmp(fields,'name'))=[];
 end
+    fields(strcmp(fields,'name'))=[];
 
 input_args = {};
 for i = 1:length(fields)

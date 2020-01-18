@@ -17,7 +17,6 @@ Ophys:
       description: desc1
       name: OpticalChannel
     indicator: ind1
-    device: device name
     location: brain
   ImageSegmentation:
     name: ''
@@ -29,12 +28,8 @@ Ophys:
     roi_response_series:
     - name: Series 1
       description: First one
-      conversion: 1
-      tag: tag2
     - name: Series2
       description: second one
-      conversion: 1
-      tag: tag2
 Subject:
   subject_id: '23'
   species: mouse
