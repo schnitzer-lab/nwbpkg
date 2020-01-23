@@ -56,9 +56,9 @@ Ophys:
   DFOverF:
     name: really doesnt matter
     roi_response_series:
-    - name: Series 1
+    - name: Series1
       description: First one
-    - name: Series 2
+    - name: Series2
       description: second one
 Subject:
   subject_id: '23'

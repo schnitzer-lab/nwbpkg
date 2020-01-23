@@ -60,7 +60,7 @@ for i=1:numOfPlanes %plane segmentations under ImageSegmentation should match Im
         plane_segmentation{i});
     
     plane_seg_object_view{i} = types.untyped.ObjectView( ...
-    ['/processing/ophys/' metadata.Ophys.ImageSegmentation.name '/' metadata.Ophys.ImageSegmentation.plane_segmentations{i}.name]);
+    ['/processing/ophys/' metadata.Ophys.ImageSegmentation.name metadata.Ophys.ImageSegmentation.plane_segmentations{i}.name]);
 end
 
 ophys_module.nwbdatainterface.set(metadata.Ophys.ImageSegmentation.name, img_seg);
@@ -95,7 +95,7 @@ for i=1:numOfROIs
         roi_response_series);
 end
 
-ophys_module.nwbdatainterface.set('fluorescence', fluorescence);
+ophys_module.nwbdatainterface.set('Fluorescence', fluorescence);
 
 nwb.processing.set('ophys', ophys_module);
 
