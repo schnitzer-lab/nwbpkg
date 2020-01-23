@@ -19,6 +19,9 @@ end
 
 metadata = ReadYaml(fpathYML);
 
+RawMeta = ReadYaml('matnwb_map.yml');
+field_handles = containers.Map;
+
 if strcmp(p.Results.dataPath,'manual')
     [file,path] = uigetfile('*.mat');
     data_path = fullfile(path,file);

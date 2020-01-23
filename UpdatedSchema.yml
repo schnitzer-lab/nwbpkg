@@ -7,9 +7,13 @@ NWBFile:
 Ophys:
   Devices:
   - name: Device1
+    tag: tag1
+  - name: Device2
+    tag: tag2
   ImagingPlanes:
   - name: ImagingPlane
-    description: ''
+    description: 'ImgPlane1'
+    tag: tag1
     excitation_lambda: 200
     imaging_rate: 5
     optical_channels:
@@ -19,7 +23,8 @@ Ophys:
     indicator: ind1
     location: brain    
   - name: ImagingPlane2
-    description: ''
+    description: 'ImgPlane1'
+    tag: tag2
     excitation_lambda: 200
     imaging_rate: 5
     optical_channels:
@@ -28,13 +33,17 @@ Ophys:
       name: OpticalChannel
     indicator: ind1
     location: brain
+    
   ImageSegmentation:
-    name: ImageSegmentation
+    name: ImageSegmentation_messedup
     plane_segmentations:
     - name: PlaneSegmentation
-      description: hg
+      description: description1
+    - name: PlaneSegmentation2
+      description: description2
+      
   DFOverF:
-    name: DfOverF
+    name: really doesnt matter
     roi_response_series:
     - name: Series 1
       description: First one

@@ -1,6 +1,5 @@
 function input_args = get_input_args(metadata_struct, object_name)
 
-% aa = ReadYaml('matnwb_map.yml');
 if ~isempty(object_name)
     workingStruct = metadata_struct.(object_name);
 else
@@ -20,6 +19,7 @@ if strcmp(object_name,'ImagingPlanes')
     fields(strcmp(fields,'name'))=[];
 end
     fields(strcmp(fields,'name'))=[];
+    fields(strcmp(fields,'tag'))=[];
 
 input_args = {};
 for i = 1:length(fields)
