@@ -58,7 +58,7 @@ Ophys:
     roi_response_series:
     - name: Series 1
       description: First one
-    - name: Series2
+    - name: Series 2
       description: second one
 Subject:
   subject_id: '23'

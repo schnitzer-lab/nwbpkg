@@ -79,7 +79,7 @@ end
 ROIfields=fields(roi_response_data);
 numOfROIs=length(ROIfields);
 
-fluorescence = types.core.Fluorescence();
+DFoverF = types.core.DfOverF();  % change dfoverf
 
 for i=1:numOfROIs
     varIn=roi_response_series_varargin{i};
@@ -88,10 +88,11 @@ for i=1:numOfROIs
             'data', roi_response_data.(ROIfields{i}), ...
             'data_unit', 'lumens', ...
             varIn{:});
-    fluorescence.roiresponseseries.set(['RoiResponseSeries' num2str(i)], roi_response_series);
+    DFoverF.roiresponseseries.set(metadata.Ophys.DFOverF.roi_response_series{i}.name,...
+        roi_response_series);
 end
 
-ophys_module.nwbdatainterface.set('Fluorescence', fluorescence);
+ophys_module.nwbdatainterface.set('DFoverF', DFoverF);
 
 nwb.processing.set('ophys', ophys_module);
 
