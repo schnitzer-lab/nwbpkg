@@ -16,35 +16,43 @@ optical_channel = types.core.OpticalChannel(op_input_args{:});
 
 try
     nwb.general_devices.set(metadata.Device{1}.device_name, types.core.Device());
-end 
+end
 
 ip_input_args = get_input_args(metadata.Ophys, 'ImagingPlanes');
-imaging_plane = types.core.ImagingPlane('device', ...
-    types.untyped.SoftLink(['/general/devices/' metadata.Ophys.Devices{1}.name]), ...
-    'optical_channel', optical_channel, ip_input_args{:});
 
-nwb.general_optophysiology.set(metadata.Ophys.ImagingPlanes{1}.name, imaging_plane);
+numOfDevices=length(length(metadata.Ophys.Devices));
+for i=1:numOfDevices
+    imaging_plane{i} = types.core.ImagingPlane('device', ...
+        types.untyped.SoftLink(['/general/devices/' metadata.Ophys.Devices{1}.name]), ...
+        'optical_channel', optical_channel, ip_input_args{:});
+    nwb.general_optophysiology.set(metadata.Ophys.ImagingPlanes{i}.name, imaging_plane{i});
+end
+
 
 imaging_plane_path = ['/general/optophysiology/' metadata.Ophys.ImagingPlanes{1}.name];
 
 ophys_module = types.core.ProcessingModule(...
     'description', 'holds processed calcium imaging data');
 
-ps_input_args = get_input_args(metadata.Ophys.ImageSegmentation, 'plane_segmentations');
-plane_segmentation = types.core.PlaneSegmentation( ...
-    'imaging_plane', imaging_plane, ...
+for i=1:numOfDevices
+ps_input_args = get_input_args(metadata.Ophys.ImageSegmentation(i), 'plane_segmentations');
+plane_segmentation{i} = types.core.PlaneSegmentation( ...
+    'imaging_plane', imaging_plane{i}, ...
     'colnames', {'imaging_mask'}, ...
     'id', types.core.ElementIdentifiers('data', int64(0:n_rois-1)), ...
     ps_input_args{:});
 
-plane_segmentation.image_mask = types.core.VectorData( ...
+plane_segmentation{i}.image_mask = types.core.VectorData( ...
     'data', image_masks, 'description', 'image masks');
 
 img_seg = types.core.ImageSegmentation();
-img_seg.planesegmentation.set('PlaneSegmentation', plane_segmentation);
+img_seg.planesegmentation.set(metadata.Ophys.ImageSegmentation(i).plane_segmentations{1, 1}.name,...
+    plane_segmentation);
 
-ophys_module.nwbdatainterface.set('ImageSegmentation', img_seg);
+ophys_module.nwbdatainterface.set( metadata.Ophys.ImageSegmentation(i).name, img_seg);
 nwb.processing.set('ophys', ophys_module);
+end
+
 
 plane_seg_object_view = types.untyped.ObjectView( ...
     '/processing/ophys/ImageSegmentation/PlaneSegmentation');
@@ -56,7 +64,7 @@ roi_table_region = types.core.DynamicTableRegion( ...
 
 NumOfSeries=length(metadata.Ophys.DFOverF.roi_response_series);
 for ser=1:NumOfSeries
-%     series_names=metadata.Ophys.DFOverF.roi_response_series{ser}.name;
+    %     series_names=metadata.Ophys.DFOverF.roi_response_series{ser}.name;
     roi_response_series_varargin{ser} = get_input_args(metadata.Ophys.DFOverF.roi_response_series{ser}, '');
 end
 
@@ -81,7 +89,7 @@ for i=1:numOfROIs
             'data_unit', 'lumens', ...
             varIn{:});
     end
-fluorescence.roiresponseseries.set(['RoiResponseSeries' num2str(i)], roi_response_series);
+    fluorescence.roiresponseseries.set(['RoiResponseSeries' num2str(i)], roi_response_series);
 end
 
 ophys_module.nwbdatainterface.set('Fluorescence', fluorescence);

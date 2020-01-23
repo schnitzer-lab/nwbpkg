@@ -19,9 +19,9 @@ Ophys:
     indicator: ind1
     location: brain
   ImageSegmentation:
-    name: ''
+    name: ImageSegmentation
     plane_segmentations:
-    - name: PlaneSeg1
+    - name: PlaneSegmentation
       description: hg
   DFOverF:
     name: DfOverF
