@@ -1,9 +1,5 @@
 function nwb = add_processed_ophys(nwb, metadata, image_masks, ...
-    roi_response_data, frame_times, frames)
-
-if ~ exist('frame_times','var') || isempty(frame_times)
-    frame_times = [];
-end
+    roi_response_data, frames)
 
 if ~ exist('frames','var') || isempty(frames)
     frames = [];
@@ -87,20 +83,11 @@ fluorescence = types.core.Fluorescence();
 
 for i=1:numOfROIs
     varIn=roi_response_series_varargin{i};
-    if frame_times
-        roi_response_series = types.core.RoiResponseSeries( ...
-            'rois', roi_table_region, ...
-            'data', roi_response_data.(ROIfields{i}), ...
-            'data_unit', 'lumens', ...
-            'timestamps', frame_times, ...
-            varIn{:});
-    else
         roi_response_series = types.core.RoiResponseSeries( ...
             'rois', roi_table_region, ...
             'data', roi_response_data.(ROIfields{i}), ...
             'data_unit', 'lumens', ...
             varIn{:});
-    end
     fluorescence.roiresponseseries.set(['RoiResponseSeries' num2str(i)], roi_response_series);
 end
 
@@ -109,14 +96,30 @@ ophys_module.nwbdatainterface.set('Fluorescence', fluorescence);
 nwb.processing.set('ophys', ophys_module);
 
 if ~isempty(frames)
-    image_series_name = 'TwoPhotonSeries';
+    yestag=1;
+    try
+        Device_tags=cellfun(@(x) x.tag, metadata.Ophys.ImagingPlanes,'uniform',0);
+    catch
+        yestag=0;
+    end
     
-    image_series = types.core.TwoPhotonSeries( ...
-        'imaging_plane', types.untyped.SoftLink(imaging_plane_path), ...
-        'starting_time_rate',  metadata.ImagingPlane{4}.imaging_rate, ...
-        'data', frames, ...
-        'data_unit', 'lumens');
-    
-    nwb.acquisition.set(image_series_name, image_series);
+    for i=1:length(metadata.Ophys.TwoPhotonSeries)
+        
+        if yestag
+            TwoPhTag=find(strcmp(metadata.Ophys.TwoPhotonSeries{i}.tag,Device_tags));
+        else
+            TwoPhTag=i;
+        end
+        
+        image_series_name = metadata.Ophys.TwoPhotonSeries{TwoPhTag}.name;
+        
+        image_series = types.core.TwoPhotonSeries( ...
+            'imaging_plane', types.untyped.SoftLink(imaging_plane_path), ...
+            'starting_time_rate',  metadata.Ophys.ImagingPlanes{TwoPhTag}.imaging_rate, ...
+            'data', frames, ...
+            'data_unit', 'lumens');
+        
+        nwb.acquisition.set(image_series_name, image_series);
+    end
 end
 end

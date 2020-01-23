@@ -10,6 +10,7 @@ Ophys:
     tag: tag1
   - name: Device2
     tag: tag2
+    
   ImagingPlanes:
   - name: ImagingPlane
     description: 'ImgPlane1'
@@ -34,10 +35,20 @@ Ophys:
     indicator: ind1
     location: brain
     
+  TwoPhotonSeries:
+  - name: TwoPhotonSeries
+    description: 'Photon Series1'
+    imaging_plane: 'ImagingPlane'
+    tag: tag1
+  - name: TwoPhotonSeries2
+    description: 'Photon Series2'
+    imaging_plane: 'ImagingPlane2'
+    tag: tag2
+    
   ImageSegmentation:
     name: ImageSegmentation_messedup
     plane_segmentations:
-    - name: PlaneSegmentation
+    - name: PlaneSegmentation_braking
       description: description1
     - name: PlaneSegmentation2
       description: description2
