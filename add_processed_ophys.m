@@ -20,8 +20,8 @@ end
 
 ip_input_args = get_input_args(metadata.Ophys, 'ImagingPlanes');
 
-numOfDevices=length(length(metadata.Ophys.Devices));
-for i=1:numOfDevices
+numOfPlanes=length(metadata.Ophys.ImagingPlanes);
+for i=1:numOfPlanes
     imaging_plane{i} = types.core.ImagingPlane('device', ...
         types.untyped.SoftLink(['/general/devices/' metadata.Ophys.Devices{1}.name]), ...
         'optical_channel', optical_channel, ip_input_args{:});
@@ -34,7 +34,7 @@ imaging_plane_path = ['/general/optophysiology/' metadata.Ophys.ImagingPlanes{1}
 ophys_module = types.core.ProcessingModule(...
     'description', 'holds processed calcium imaging data');
 
-for i=1:numOfDevices
+for i=1:numOfPlanes
 ps_input_args = get_input_args(metadata.Ophys.ImageSegmentation(i), 'plane_segmentations');
 plane_segmentation{i} = types.core.PlaneSegmentation( ...
     'imaging_plane', imaging_plane{i}, ...

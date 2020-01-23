@@ -17,6 +17,16 @@ Ophys:
       description: desc1
       name: OpticalChannel
     indicator: ind1
+    location: brain    
+  - name: ImagingPlane2
+    description: ''
+    excitation_lambda: 200
+    imaging_rate: 5
+    optical_channels:
+    - emission_lambda: 200
+      description: desc1
+      name: OpticalChannel
+    indicator: ind1
     location: brain
   ImageSegmentation:
     name: ImageSegmentation
