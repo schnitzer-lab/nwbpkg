@@ -1,5 +1,8 @@
 function [image_masks, roi_response_data] = extract_nwb_data(fpath,data_type)
 
+% used with mat2nwb. Extracts appropriate data based on the type of the
+% input .mat file
+
 dat = load(fpath);
 if strcmp(data_type,'cnmfe')
     image_masks = dat.cnmfeAnalysisOutput.extractedImages;
@@ -24,8 +27,10 @@ elseif strcmp(data_type,'extract')
     end
     
 elseif strcmp(data_type,'cnmf')
-    %this file was empty on arrival
+    disp('at time of development cnmf files had no data')
+    return
 elseif strcmp(data_type,'em')
-    % this one only has options    
+    disp('at time of development em files had no data')
+    return  
 end
 end

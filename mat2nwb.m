@@ -1,74 +1,74 @@
-function mat2nwb(nwbPath,varargin)
-% defined inputs and input parser
-defaultYmlPath='manual';
+function mat2nwb(varargin)
+
+% MAT2NWB: convert Schnitzer matlab data to NWB data
+%
+% MAT2NWB() promts the user for a metadata yaml file, corresponding
+% .mat file and resulting .nwb file name and location.
+%
+% MAT2NWB('nwbpath','example.nwb','yamlpath','example.yml','datapath','example.mat')
+% executes the function without gui prompts for file names. Any missing
+% parameter will prompt the user for its location.
+%
+% Following packages are required:
+% - YAMLMATLAB: https://github.com/ewiger/yamlmatlab
+% - MATNWB: https://github.com/NeurodataWithoutBorders/matnwb
+%
+% Compatible matlab files:
+% - *cnmfeAnalysis.mat
+% - *extractAnalysis.mat
+%
+
+defaultNWBpath='manual';
+defaultYamlPath='manual';
 defaultDataPath='manual';
-defaultDataType='manual';
 
 p=inputParser;
-addRequired(p,'nwbPath')
-addParameter(p, 'ymlPath', defaultYmlPath)
-addParameter(p, 'dataType', defaultDataType)
-addParameter(p,'dataPath', defaultDataPath)
-parse(p,nwbPath,varargin{:})
+addParameter(p, 'nwbpath', defaultNWBpath)
+addParameter(p, 'yamlpath', defaultYamlPath)
+addParameter(p, 'datapath', defaultDataPath)
+parse(p,varargin{:})
 
-if strcmp(p.Results.ymlPath,'manual')
-    fpathYML = uigetfile('*.yml');
+if strcmp(p.Results.yamlpath,'manual')
+    fpathYML = uigetfile('*.yml','YAML file with metadata');
 else
-    fpathYML=p.Results.ymlPath;
+    fpathYML=p.Results.yamlpath;
 end
 
 metadata = ReadYaml(fpathYML);
 
-if strcmp(p.Results.dataPath,'manual')
-    [file,path] = uigetfile('*.mat');
+if strcmp(p.Results.datapath,'manual')
+    [file,path] = uigetfile('*.mat','matlab file with data');
     data_path = fullfile(path,file);
 else
-    data_path=p.Results.dataPath;
+    data_path=p.Results.datapath;
 end
 
-if strcmp(p.Results.nwbPath,'manual')
-    fpath = uiputfile('*.nwb');
+if strcmp(p.Results.nwbpath,'manual')
+    fpath = uiputfile('*.nwb','location and name of NWB file');
 else
-    fpath = p.Results.nwbPath;
+    fpath = p.Results.nwbpath;
 end
 
-if strcmp(p.Results.dataType,'manual')
-    if contains(data_path,'extract')
-        data_type='extract';
-    elseif contains(data_path,'cnmf') && ~contains(data_path,'cnmfe')
-        data_type='cnmf';
-    elseif contains(data_path,'cnmfe')
-        data_type='cnmfe';
-    elseif contains(data_path,'em')
-        data_type='em';
-    end
-else
-    data_type = p.Results.dataType;
+if contains(data_path,'extract')
+    data_type='extract';
+elseif contains(data_path,'cnmf') && ~contains(data_path,'cnmfe')
+    data_type='cnmf';
+elseif contains(data_path,'cnmfe')
+    data_type='cnmfe';
+elseif contains(data_path,'em')
+    data_type='em';
 end
 
-% metadata = construct_metadata_struct(RawMeta);
+
 [image_masks, roi_response_data] = extract_nwb_data(data_path, data_type);
-nwb = init_nwb_session(metadata);
+
+nwbfile_input_args = get_input_args(metadata, 'NWBFile');
+nwb = NwbFile(nwbfile_input_args{:});
+
+subject_input_args = get_input_args(metadata, 'Subject');
+nwb.general_subject = types.core.Subject(subject_input_args{:});
+
 nwb = add_processed_ophys(nwb, metadata, image_masks, roi_response_data);
 nwbExport(nwb, fpath);
 
-    function metadata = construct_metadata_struct(field_handles)
-        metadata = struct;
-        keys = field_handles.keys;
-        for i = 1:length(keys)
-            key = keys{i};
-            handle = field_handles(key);
-            value = handle;
-            if any(strcmp(key, {'keywords','experimenter'})) && ...
-                    any(contains(value, ';'))
-                value = strsplit(value, ';');
-            elseif strcmp(key, {'sesssion_start_time', 'date_of_birth'})
-                value = datenum(value);
-            elseif isfinite(str2double(value))
-                value = str2double(value);
-            end
-            metadata.(key) = value;
-        end
-        
-    end
 end

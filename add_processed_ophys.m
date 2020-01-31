@@ -1,6 +1,9 @@
 function nwb = add_processed_ophys(nwb, metadata, image_masks, ...
     roi_response_data, frames)
 
+% used in mat2nwb to extract and assign ROI response data from .mat
+% datafiles to nwb.
+
 if ~ exist('frames','var') || isempty(frames)
     frames = [];
 end
@@ -45,7 +48,7 @@ ophys_module = types.core.ProcessingModule(...
     'description', 'holds processed calcium imaging data');
 
 img_seg = types.core.ImageSegmentation();
-for i=1:numOfPlanes %plane segmentations under ImageSegmentation should match ImagingPlanes?
+for i=1:numOfPlanes 
     ps_input_args = get_input_args(metadata.Ophys.ImageSegmentation.plane_segmentations{i}, '');
     plane_segmentation{i} = types.core.PlaneSegmentation( ...
         'imaging_plane', imaging_plane{i}, ...

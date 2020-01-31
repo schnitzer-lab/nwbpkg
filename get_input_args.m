@@ -1,5 +1,8 @@
 function input_args = get_input_args(metadata_struct, object_name)
 
+% INPUT_ARGS Obtains input arguments for mat2nwb to correctly interface with 
+% matnwb package
+
 if ~isempty(object_name)
     workingStruct = metadata_struct.(object_name);
 else
