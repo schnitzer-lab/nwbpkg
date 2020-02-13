@@ -51,6 +51,7 @@ else
     fpath = p.Results.nwbpath;
 end
 
+% Determine what type of file the user has given
 if contains(data_path,'extract')
     data_type='extract';
 elseif contains(data_path,'cnmf') && ~contains(data_path,'cnmfe')
@@ -59,8 +60,11 @@ elseif contains(data_path,'cnmfe')
     data_type='cnmfe';
 elseif contains(data_path,'em')
     data_type='em';
+elseif contains(data_path,'pcaica')
+    data_type='pcaica';
+elseif contains(data_path,'roi')
+    data_type='roi';
 end
-
 
 [image_masks, roi_response_data] = extract_nwb_data(data_path, data_type);
 
