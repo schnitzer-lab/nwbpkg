@@ -1,7 +1,13 @@
 function [image_masks, roi_response_data] = extract_nwb_data(fpath,data_type)
 
-% used with mat2nwb. Extracts appropriate data based on the type of the
-% input .mat file
+% EXTRACT_NWB_DATA: extracts data from the matlab file to add to NWB.
+% 
+%    EXTRACT_NWB_DATA(fpath) loads .mat dataset specified by the fpath.
+%    
+%    EXTRACT_NWB_DATA(fpath, data_type) specifies the data type to be
+%    loaded. This forgoes the need to infer data type from filenames.
+%
+%    This function requires mat2nwb to function as intended.
 
 dat = load(fpath);
 if strcmp(data_type,'cnmfe')

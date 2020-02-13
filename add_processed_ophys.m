@@ -1,8 +1,14 @@
 function nwb = add_processed_ophys(nwb, metadata, image_masks, ...
     roi_response_data, frames)
 
-% used in mat2nwb to extract and assign ROI response data from .mat
-% datafiles to nwb.
+% ADD_PROCESSED_OPHYS: adds physiology data into the NWB container. Used in
+% conjunction with mat2nwb.
+% 
+%    ADD_PROCESSED_OPHYS(nwb, metadata, image_masks, roi_response_data, frames)
+%    Takes in existing NWB object and populates it with metatdata,
+%    image masks, roi data, and frame information. 
+%
+%    This function requires mat2nwb to function as intended.
 
 if ~ exist('frames','var') || isempty(frames)
     frames = [];
@@ -19,8 +25,6 @@ for i=1:numOfDevices
     nwb.general_devices.set(metadata.Ophys.Devices{numOfDevices}.name, types.core.Device());
 end
 
-ip_input_args = get_input_args(metadata.Ophys, 'ImagingPlanes');
-
 yestag=1;
 try
     Device_tags=cellfun(@(x) x.tag, metadata.Ophys.Devices,'uniform',0);
@@ -30,6 +34,9 @@ end
 
 numOfPlanes=length(metadata.Ophys.ImagingPlanes);
 for i=1:numOfPlanes
+    
+    ip_input_args = get_input_args(metadata.Ophys, 'ImagingPlanes');
+    
     if yestag
         dev_name=find(strcmp(metadata.Ophys.ImagingPlanes{i}.tag,Device_tags));
     else
