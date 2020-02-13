@@ -34,7 +34,7 @@ else
     fpathYML=p.Results.yamlpath;
 end
 
-metadata = ReadYaml(fpathYML);
+metadata = yaml.ReadYaml(fpathYML);
 
 if strcmp(p.Results.datapath,'manual')
     [file,path] = uigetfile('*.mat','matlab file with data');
