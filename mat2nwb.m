@@ -17,6 +17,8 @@ function mat2nwb(varargin)
 % - *cnmfeAnalysis.mat
 % - *extractAnalysis.mat
 %
+% changelong
+	% 2020.02.12 [17:42:19] - Add support for NWB preferred ISO 8601 format.
 
 defaultNWBpath='manual';
 defaultYamlPath='manual';
@@ -63,6 +65,8 @@ end
 [image_masks, roi_response_data] = extract_nwb_data(data_path, data_type);
 
 nwbfile_input_args = get_input_args(metadata, 'NWBFile');
+% Convert to ISO 8601 format
+nwbfile_input_args{4} = datestr(nwbfile_input_args{4}, 'yyyy-mm-dd HH:MM:SS');
 nwb = NwbFile(nwbfile_input_args{:});
 
 subject_input_args = get_input_args(metadata, 'Subject');
