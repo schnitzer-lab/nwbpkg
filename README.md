@@ -35,4 +35,4 @@ To function properly, this code requires the following packages:
  
  ---
  
-extract_nwb_data.m is a basic example function that extracts data from NWB file back to the matlab format. 
+`extract_nwb_data.m` is a basic example function that extracts data from NWB file back to the matlab format. 
