@@ -8,7 +8,7 @@ To function properly, this code requires the following packages:
  
  This code was written and tested on MATLAB R2019b, compatability will vary for other versions.
  
- To execude the code use the command 'mat2nwb' in MATLAB command window. 
+ To execude the code use the command `mat2nwb` in MATLAB command window. 
  For basic function no other commands are required, and you will be prompted for any additional
  info. 
  
