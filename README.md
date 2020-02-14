@@ -1,6 +1,6 @@
-mat2nwb README:
+# NWB Schnitzer Lab
 
-mat2nwb converts Schnitzer lab MATLAB datafiles to NWB. 
+`mat2nwb` converts Schnitzer lab MATLAB datafiles to NWB. 
 
 To function properly, this code requires the following packages: 
  - YAMLMATLAB: https://github.com/ewiger/yamlmatlab
@@ -14,20 +14,23 @@ To function properly, this code requires the following packages:
  
  Alternatively, the following parameters may be used:
  
- matnwb('yamlpath','/examplepath/examplefile.yml'):  manually input the location of the metadata
+ `matnwb('yamlpath','/examplepath/examplefile.yml')`:  manually input the location of the metadata
  yaml file. 
  
- matnwb('datapath','/examplepath/examplefile.mat'): manually input the location of the matlab
+ `matnwb('datapath','/examplepath/examplefile.mat')`: manually input the location of the matlab
  data files. This code was developed and tested with the following file naming conventions:
  
  *_cnmfAnalysis.mat
+ 
  *_cnmfeAnalysis.mat
+ 
  *_extractAnalysis.mat
+ 
  *_emAnalysis.mat
  
  Other datafiles may not be compatible
  
- matnwb('nwbpath','/examplepath/examplefile.nwb'): manually enter the name and location of the
+ `matnwb('nwbpath','/examplepath/examplefile.nwb')`: manually enter the name and location of the
  resulting NWB file.
  
  ---
