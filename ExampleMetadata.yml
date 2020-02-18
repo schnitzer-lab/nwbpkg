@@ -1,7 +1,7 @@
 ---
 NWBFile:
   keywords: []
-  session_start_time: '18-Jan-2020'
+  session_start_time: 18-Jan-2020
   identifier: ident1
   session_description: fdsfsfdsfd
 Ophys:
@@ -13,7 +13,7 @@ Ophys:
     
   ImagingPlanes:
   - name: ImagingPlane
-    description: 'ImgPlane1'
+    description: ImgPlane1
     tag: tag1
     excitation_lambda: 200
     imaging_rate: 5
@@ -24,7 +24,7 @@ Ophys:
     indicator: ind1
     location: brain    
   - name: ImagingPlane2
-    description: 'ImgPlane1'
+    description: ImgPlane1
     tag: tag2
     excitation_lambda: 200
     imaging_rate: 5
@@ -37,12 +37,12 @@ Ophys:
     
   TwoPhotonSeries:
   - name: TwoPhotonSeries
-    description: 'Photon Series1'
-    imaging_plane: 'ImagingPlane'
+    description: Photon Series1
+    imaging_plane: ImagingPlane
     tag: tag1
   - name: TwoPhotonSeries2
-    description: 'Photon Series2'
-    imaging_plane: 'ImagingPlane2'
+    description: Photon Series2
+    imaging_plane: ImagingPlane2
     tag: tag2
     
   ImageSegmentation:

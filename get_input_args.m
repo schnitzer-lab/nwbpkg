@@ -1,6 +1,6 @@
 function input_args = get_input_args(metadata_struct, object_name)
 
-% INPUT_ARGS Obtains input arguments for mat2nwb to correctly interface with 
+% INPUT_ARGS Obtains input arguments for mat2nwb to correctly interface with
 % matnwb package
 
 if ~isempty(object_name)
@@ -21,24 +21,24 @@ if strcmp(object_name,'ImagingPlanes')
     fields(strcmp(fields,'optical_channels'))=[];
     fields(strcmp(fields,'name'))=[];
 end
-    fields(strcmp(fields,'name'))=[];
-    fields(strcmp(fields,'tag'))=[];
+
+fields(strcmp(fields,'name'))=[];
+fields(strcmp(fields,'tag'))=[];
 
 input_args = {};
+
 for i = 1:length(fields)
     if isa(workingStruct.(fields{i}), 'cell')
-        
         input_args{end+1} = fields{i};
         input_args{end+1} = workingStruct.(fields{i});
     else
-        
-        try
-            if strcmp(fields(i),'session_start_time')
-                fields(i).(char(fieldnames(fields(i))))=datetime(fields(i).(char(fieldnames(fields(i)))));
-            end
+        if strcmp(fields(i),'session_start_time')
+            input_args{end+1} = fields{i};
+            input_args{end+1} = datetime(workingStruct.(fields{i}));
+        else
+            input_args{end+1} = fields{i};
+            input_args{end+1} = workingStruct.(fields{i});
         end
-        input_args{end+1} = fields{i};
-        input_args{end+1} = workingStruct.(fields{i});
     end
 end
 
