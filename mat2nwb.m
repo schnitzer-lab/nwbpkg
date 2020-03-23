@@ -30,6 +30,8 @@ addParameter(p, 'yamlpath', defaultYamlPath)
 addParameter(p, 'datapath', defaultDataPath)
 parse(p,varargin{:})
 
+% fid = H5F.create('temp_compressed');% initialize file for compressed data
+
 if strcmp(p.Results.yamlpath,'manual')
     fpathYML = uigetfile('*.yml','YAML file with metadata');
 else
