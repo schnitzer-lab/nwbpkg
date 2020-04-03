@@ -79,11 +79,11 @@ for i=1:numOfPlanes
     plane_segmentation{i}.image_mask =types.hdmf_common.VectorData(...
         'data',DataPipe, 'description', 'image masks');
     
-    img_seg.planesegmentation.set(metadata.Ophys.ImageSegmentation.plane_segmentations{i}.name,...
+    img_seg.planesegmentation.set([metadata.Ophys.ImageSegmentation.plane_segmentations{i}.name '_' data_type] ,...
         plane_segmentation{i});
     
     plane_seg_object_view{i} = types.untyped.ObjectView( ...
-        ['/processing/ophys/' metadata.Ophys.ImageSegmentation.name '/' metadata.Ophys.ImageSegmentation.plane_segmentations{i}.name]);
+        ['/processing/ophys/' metadata.Ophys.ImageSegmentation.name '/' metadata.Ophys.ImageSegmentation.plane_segmentations{i}.name '_' data_type]);
 end
 
 ophys_module.nwbdatainterface.set(metadata.Ophys.ImageSegmentation.name, img_seg);

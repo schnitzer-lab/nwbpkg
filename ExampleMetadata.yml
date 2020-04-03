@@ -46,9 +46,9 @@ Ophys:
     tag: tag2
     
   ImageSegmentation:
-    name: ImageSegmentation_messedup
+    name: ImageSegmentation1_cnmnmsd
     plane_segmentations:
-    - name: PlaneSegmentation_braking
+    - name: PlaneSegmentation1
       description: description1
     - name: PlaneSegmentation2
       description: description2
