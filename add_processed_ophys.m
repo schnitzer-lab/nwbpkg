@@ -1,5 +1,5 @@
 function nwb = add_processed_ophys(nwb, metadata, image_masks, ...
-    roi_response_data, frames)
+    roi_response_data, data_type, frames)
 
 % ADD_PROCESSED_OPHYS: adds physiology data into the NWB container. Used in
 % conjunction with mat2nwb.
@@ -57,6 +57,10 @@ ophys_module = types.core.ProcessingModule(...
 img_seg = types.core.ImageSegmentation();
 for i=1:numOfPlanes
     ps_input_args = get_input_args(metadata.Ophys.ImageSegmentation.plane_segmentations{i}, '');
+    
+    descIDX=find(cellfun(@(x) strcmp(x,'description'),ps_input_args))+1;
+    ps_input_args{descIDX}=['Extraction method: ' data_type '. ' ps_input_args{descIDX}];
+    
     plane_segmentation{i} = types.core.PlaneSegmentation( ...
         'imaging_plane', imaging_plane{i}, ...
         'colnames', {'imaging_mask'}, ...

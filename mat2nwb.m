@@ -78,7 +78,7 @@ nwb = NwbFile(nwbfile_input_args{:});
 subject_input_args = get_input_args(metadata, 'Subject');
 nwb.general_subject = types.core.Subject(subject_input_args{:});
 
-nwb = add_processed_ophys(nwb, metadata, image_masks, roi_response_data);
+nwb = add_processed_ophys(nwb, metadata, image_masks, roi_response_data,data_type);
 nwbExport(nwb, fpath);
 
 end

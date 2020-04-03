@@ -24,7 +24,7 @@ Ophys:
     indicator: ind1
     location: brain    
   - name: ImagingPlane2
-    description: ImgPlane1
+    description: ImgPlane2
     tag: tag2
     excitation_lambda: 200
     imaging_rate: 5
