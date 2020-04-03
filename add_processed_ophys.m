@@ -34,9 +34,9 @@ end
 
 numOfPlanes=length(metadata.Ophys.ImagingPlanes);
 for i=1:numOfPlanes
-    
+
     ip_input_args = get_input_args(metadata.Ophys, 'ImagingPlanes');
-    
+
     if yestag
         dev_name=find(strcmp(metadata.Ophys.ImagingPlanes{i}.tag,Device_tags));
     else
@@ -57,31 +57,31 @@ ophys_module = types.core.ProcessingModule(...
 img_seg = types.core.ImageSegmentation();
 for i=1:numOfPlanes
     ps_input_args = get_input_args(metadata.Ophys.ImageSegmentation.plane_segmentations{i}, '');
-    
+
     descIDX=find(cellfun(@(x) strcmp(x,'description'),ps_input_args))+1;
     ps_input_args{descIDX}=['Extraction method: ' data_type '. ' ps_input_args{descIDX}];
-    
+
     plane_segmentation{i} = types.core.PlaneSegmentation( ...
         'imaging_plane', imaging_plane{i}, ...
         'colnames', {'imaging_mask'}, ...
         'id', types.hdmf_common.ElementIdentifiers('data', int64(0:n_rois-1)), ...
         ps_input_args{:});
-    
+
     maxSize=size(image_masks);
-    
+
     DataPipe=types.untyped.DataPipe(maxSize,...
         'data', image_masks,...
         'dataType', 'uint64',...
         'compressionLevel', 3,...
-        'chunkSize', [1 250 31],...
+        'chunkSize', [1 min([pow2(floor(log2(size(image_masks,1)))) 250]) min([pow2(floor(log2(size(image_masks,2)))) 31])],...
         'axis', 1);
-    
+
     plane_segmentation{i}.image_mask =types.hdmf_common.VectorData(...
         'data',DataPipe, 'description', 'image masks');
-    
+
     img_seg.planesegmentation.set([metadata.Ophys.ImageSegmentation.plane_segmentations{i}.name '_' data_type] ,...
         plane_segmentation{i});
-    
+
     plane_seg_object_view{i} = types.untyped.ObjectView( ...
         ['/processing/ophys/' metadata.Ophys.ImageSegmentation.name '/' metadata.Ophys.ImageSegmentation.plane_segmentations{i}.name '_' data_type]);
 end
@@ -102,29 +102,29 @@ numOfROIs=length(ROIfields);
 fluorescence = types.core.Fluorescence();
 
 for i=1:numOfROIs
-    
-    
+
+
     roi_table_region = types.hdmf_common.DynamicTableRegion( ...
         'table', plane_seg_object_view{i}, ...
         'description', 'all_rois', ...
         'data', [0 n_rois-1]');
-    
+
     maxSize=size(roi_response_data.(ROIfields{i}));
-    
+
     DataPipe=types.untyped.DataPipe(maxSize,...
         'data', roi_response_data.(ROIfields{i}),...
         'dataType', 'uint64',...
         'compressionLevel', 3,...
         'chunkSize', [17 451],...
         'axis', 1);
-    
+
     varIn=roi_response_series_varargin{i};
     roi_response_series = types.core.RoiResponseSeries( ...
         'rois', roi_table_region, ...
         'data', DataPipe, ...
         'data_unit', 'lumens', ...
         varIn{:});
-    
+
     fluorescence.roiresponseseries.set(metadata.Ophys.DFOverF.roi_response_series{i}.name,...
         roi_response_series);
 end
@@ -140,17 +140,17 @@ if ~isempty(frames)
     catch
         yestag=0;
     end
-    
+
     for i=1:length(metadata.Ophys.TwoPhotonSeries)
-        
+
         if yestag
             TwoPhTag=find(strcmp(metadata.Ophys.TwoPhotonSeries{i}.tag,Device_tags));
         else
             TwoPhTag=i;
         end
-        
+
         image_series_name = metadata.Ophys.TwoPhotonSeries{TwoPhTag}.name;
-        
+
         maxSize=size(frames);
         DataPipe=types.untyped.DataPipe(maxSize,...
             'data', frames,...
@@ -158,15 +158,15 @@ if ~isempty(frames)
             'compressionLevel', 3,...
             'chunkSize', [256 256 256],...
             'axis', 1);
-        
+
         image_series = types.core.TwoPhotonSeries( ...
             'imaging_plane', types.untyped.SoftLink(imaging_plane_path), ...
             'starting_time_rate',  metadata.Ophys.ImagingPlanes{TwoPhTag}.imaging_rate, ...
             'data', DataPipe, ...
             'data_unit', 'lumens');
-        
-        
-        
+
+
+
         nwb.acquisition.set(image_series_name, image_series);
     end
 end
