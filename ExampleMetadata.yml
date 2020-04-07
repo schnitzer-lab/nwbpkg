@@ -56,10 +56,10 @@ Ophys:
   DFOverF:
     name: DFOverF
     roi_response_series:
-    - name: Series1
-      description: First one
-    - name: Series2
-      description: second one
+    - name: RoiResponseSeries1
+      description: First fluorescence response series from algorithm.
+    - name: RoiResponseSeries2
+      description: Second (alternative) fluorescence response series from algorithm.
 Subject:
   subject_id: '23'
   species: mouse

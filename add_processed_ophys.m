@@ -9,6 +9,8 @@ function nwb = add_processed_ophys(nwb, metadata, image_masks, ...
 %    image masks, roi data, and frame information.
 %
 %    This function requires mat2nwb to function as intended.
+% changelog
+    % 2020.04.05 [15:57:59] - Name changes to mat NWB convention.
 
 if ~ exist('frames','var') || isempty(frames)
     frames = [];
@@ -139,7 +141,7 @@ for i=1:numOfROIs
         roi_response_series);
 end
 
-ophys_module.nwbdatainterface.set('fluorescence', fluorescence);
+ophys_module.nwbdatainterface.set('Fluorescence', fluorescence);
 
 nwb.processing.set('ophys', ophys_module);
 
