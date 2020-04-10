@@ -10,7 +10,7 @@ Ophys:
     tag: tag1
   - name: Device2
     tag: tag2
-    
+
   ImagingPlanes:
   - name: ImagingPlane
     description: ImgPlane1
@@ -22,7 +22,7 @@ Ophys:
       description: desc1
       name: OpticalChannel
     indicator: ind1
-    location: brain    
+    location: brain
   - name: ImagingPlane2
     description: ImgPlane2
     tag: tag2
@@ -34,7 +34,7 @@ Ophys:
       name: OpticalChannel
     indicator: ind1
     location: brain
-    
+
   TwoPhotonSeries:
   - name: TwoPhotonSeries
     description: Photon Series1
@@ -44,17 +44,17 @@ Ophys:
     description: Photon Series2
     imaging_plane: ImagingPlane2
     tag: tag2
-    
+
   ImageSegmentation:
-    name: ImageSegmentation1_cnmnmsd
+    name: ImageSegmentation
     plane_segmentations:
     - name: PlaneSegmentation1
       description: description1
     - name: PlaneSegmentation2
       description: description2
-      
+
   DFOverF:
-    name: really doesnt matter
+    name: DFOverF
     roi_response_series:
     - name: Series1
       description: First one
