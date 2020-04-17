@@ -1,9 +1,9 @@
 ---
 NWBFile:
-  keywords: []
+  general_keywords: []
   session_start_time: 18-Jan-2020
   identifier: ident1
-  session_description: fdsfsfdsfd
+  session_description: ImagingCellExtraction
 Ophys:
   Devices:
   - name: Device1
