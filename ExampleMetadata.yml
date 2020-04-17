@@ -1,9 +1,9 @@
 ---
 NWBFile:
-  keywords: []
+  general_keywords: []
   session_start_time: 18-Jan-2020
   identifier: ident1
-  session_description: fdsfsfdsfd
+  session_description: ImagingCellExtraction
 Ophys:
   Devices:
   - name: Device1
@@ -56,10 +56,10 @@ Ophys:
   DFOverF:
     name: DFOverF
     roi_response_series:
-    - name: Series1
-      description: First one
-    - name: Series2
-      description: second one
+    - name: RoiResponseSeries1
+      description: First fluorescence response series from algorithm.
+    - name: RoiResponseSeries2
+      description: Second (alternative) fluorescence response series from algorithm.
 Subject:
   subject_id: '23'
   species: mouse
