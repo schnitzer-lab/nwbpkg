@@ -73,10 +73,6 @@ for i=1:numOfPlanes
     maxSize=size(image_masks);
 
     image_masksClass = class(image_masks);
-    if any(strcmp(image_masksClass,{'float','double','uint8','int8','uint16','int16','uint32','int32','uint64','int64'}))==0
-        image_masksClass = 'double';
-        image_masks = double(image_masks);
-    end
 
     DataPipe=types.untyped.DataPipe('maxSize',maxSize,...
         'data', image_masks,...
@@ -121,10 +117,6 @@ for i=1:numOfROIs
     maxSize=size(roi_response_data.(ROIfields{i}));
 
     roiClass = class(roi_response_data.(ROIfields{i}));
-    if any(strcmp(roiClass,{'float','double','uint8','int8','uint16','int16','uint32','int32','uint64','int64'}))==0
-        roiClass = 'double';
-        roi_response_data.(ROIfields{i}) = double(roi_response_data.(ROIfields{i}));
-    end
 
     DataPipe=types.untyped.DataPipe('maxSize', maxSize,...
         'data', roi_response_data.(ROIfields{i}),...
@@ -167,10 +159,6 @@ if ~isempty(frames)
         image_series_name = metadata.Ophys.TwoPhotonSeries{TwoPhTag}.name;
 
         framesClass = class(frames);
-        if any(strcmp(roiClass,{'float','double','uint8','int8','uint16','int16','uint32','int32','uint64','int64'}))==0
-            framesClass = 'double';
-            frames = double(frames);
-        end
 
         maxSize=size(frames);
         DataPipe=types.untyped.DataPipe('maxSize',maxSize,...
